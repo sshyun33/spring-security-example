@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -25,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 /*        auth
                 .inMemoryAuthentication()
-                    .withUser("user").password("password").authorities("USER");*/
+                    .withUser("seo").password("seo").authorities("PERM_ACCESS_ADMIN_PAGE");*/
         auth
                 .userDetailsService(jdbcDaoImpl());
 
@@ -42,13 +44,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasAuthority("PERM_ACCESS_ADMIN_PAGE")
-                .anyRequest().authenticated()
-                .and()
+                    .antMatchers("/public/**").permitAll()
+                    .antMatchers("/admin/**").hasAuthority("PERM_ACCESS_ADMIN_PAGE")
+                    .anyRequest().authenticated()
+                    .and()
                 .formLogin()
-                .loginPage("/login")
+                    .permitAll()
+                    .loginPage("/login")
 //                    .defaultSuccessUrl("/security", true)
-                .permitAll();
+                    .and()
+                .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/login");
+//                    .deleteCookies("JSESSIONID");
+
+
+
 
 
     }

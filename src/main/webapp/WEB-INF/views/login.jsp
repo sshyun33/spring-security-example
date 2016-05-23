@@ -31,7 +31,7 @@
 <input type="password" id="password" name="password">
 <input type="submit" value="submit">
 
-<input type="hidden"                        6
+<input type="hidden"
        name="${_csrf.parameterName}"
        value="${_csrf.token}"/>
 

@@ -15,7 +15,7 @@ public class RootContext {
    DataSource dataSource() {
      DriverManagerDataSource ds = new DriverManagerDataSource();
        ds.setDriverClassName("com.mysql.jdbc.Driver");
-       ds.setUrl("jdbc:mysql://www.rohaky.com/test");
+       ds.setUrl("jdbc:mysql://www.rohaky.com/SPRING_SECURITY");
        ds.setUsername("root");
        ds.setPassword("apmsetup");
        return ds;

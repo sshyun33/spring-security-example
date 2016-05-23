@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -24,9 +26,19 @@ public class HomeController {
         return "index";
     }
 
+    @RequestMapping("/public")
+    public @ResponseBody String publicPage() {
+        return "Public Page";
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage() {
         return "login";
+    }
+
+    @RequestMapping(value = "/logoutForm", method = RequestMethod.GET)
+    public String logoutFormPage() {
+        return "logoutForm";
     }
 
     @RequestMapping("/security")
